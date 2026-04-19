@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Kanban, BookOpen, LogOut, Loader2, AlertTriangle, X } from "lucide-react";
+import { Kanban, BookOpen, LogOut, Loader2, AlertTriangle } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -17,10 +17,9 @@ interface UserInfo {
 
 interface SidebarProps {
     inProgressCount?: number;
-    onClose?: () => void;
 }
 
-export function Sidebar({ inProgressCount = 0, onClose }: SidebarProps) {
+export function Sidebar({ inProgressCount = 0 }: SidebarProps) {
     const pathname = usePathname();
     const router = useRouter();
     const [user, setUser] = useState<UserInfo | null>(null);
@@ -66,17 +65,6 @@ export function Sidebar({ inProgressCount = 0, onClose }: SidebarProps) {
                     </h1>
                     <p className="text-[11px] text-muted-foreground mt-0.5">Team workspace</p>
                 </div>
-                {/* Close button — only visible on small screens */}
-                {onClose && (
-                    <Button
-                        variant="ghost"
-                        size="icon"
-                        className="h-7 w-7 shrink-0 lg:hidden text-muted-foreground hover:text-foreground"
-                        onClick={onClose}
-                    >
-                        <X className="h-4 w-4" />
-                    </Button>
-                )}
             </div>
 
             {/* Navigation */}
@@ -87,7 +75,7 @@ export function Sidebar({ inProgressCount = 0, onClose }: SidebarProps) {
                 {navItems.map(({ href, label, icon: Icon }) => {
                     const active = pathname.startsWith(href);
                     return (
-                        <Link key={href} href={href} onClick={onClose}>
+                        <Link key={href} href={href}>
                             <div
                                 className={cn(
                                     "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-150",
